@@ -1,6 +1,8 @@
 # Markdown Format Converter Suite
 
-全功能 Markdown 格式转换工具箱 — 16 个工具完整复刻 md-to.com，100% 本地处理。
+> [md-to.com](https://md-to.com) 的本地 CLI 复刻版 — 16 个工具，100% 本地运行，隐私安全、无需联网。
+
+md-to.com 是一个极简好用的在线 Markdown 格式转换工具，所有转换在浏览器本地完成。本项目将其核心功能复刻为命令行工具，方便批量处理、脚本集成和本地自动化。
 
 ## 工具概览
 
@@ -37,10 +39,8 @@
 
 ## 安装
 
-每个工具目录下运行：
-
 ```bash
-npm install
+cd <tool-dir> && npm install
 ```
 
 ## 使用
@@ -51,19 +51,30 @@ npm install
 node <tool-dir>/index.js convert -i <input> -o <output>
 ```
 
-### md-to-pdf 额外功能
+### md-to-pdf
 
 ```bash
 node md-to-pdf/index.js list              # 列出 29 个 PDF 主题
-node md-to-pdf/index.js info <theme-id>   # 查看主题颜色/字体详情
+node md-to-pdf/index.js info <theme-id>   # 查看主题颜色/字体
 node md-to-pdf/index.js convert -i in.md -o out.pdf -t <theme>
 ```
 
-### csv-to-md 额外功能
+### csv-to-md
 
 ```bash
 node csv-to-md/index.js convert -i in.csv -o out.md -d ','   # 指定分隔符
 ```
+
+## 与原版对比
+
+| | md-to.com | 本工具 |
+|------|-----------|---------|
+| 运行方式 | 浏览器在线 | 命令行本地 |
+| 编辑器 | 分屏实时预览 | — |
+| 隐私 | 浏览器本地处理 | 完全本地，无网络依赖 |
+| 批量处理 | 单个文件 | 支持脚本批量 |
+| 集成 | 手动操作 | 可嵌入 CI/脚本 |
+| 收费 | 免费 | 开源 MIT |
 
 ## 项目结构
 
