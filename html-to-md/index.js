@@ -9,6 +9,45 @@ const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'ut
 // Same config as md-to.com: atx headings, fenced code blocks
 const turndown = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
 
+// Custom table rule — turndown doesn't support GFM tables natively
+turndown.addRule('table', {
+  filter: 'table',
+  replacement: function (_content, node) {
+    const rows = [];
+    const thead = node.querySelector('thead');
+    const tbody = node.querySelector('tbody');
+    let headers = [];
+
+    if (thead) {
+      const headerRow = thead.querySelector('tr');
+      if (headerRow) {
+        headers = Array.from(headerRow.querySelectorAll('th, td')).map(th =>
+          (th.textContent || '').trim()
+        );
+      }
+    }
+
+    // Build header
+    if (headers.length > 0) {
+      rows.push('| ' + headers.join(' | ') + ' |');
+      rows.push('| ' + headers.map(() => '---').join(' | ') + ' |');
+    }
+
+    // Build body rows
+    if (tbody) {
+      const dataRows = Array.from(tbody.querySelectorAll('tr'));
+      for (const tr of dataRows) {
+        const cells = Array.from(tr.querySelectorAll('td, th')).map(td =>
+          (td.textContent || '').trim()
+        );
+        if (cells.length > 0) rows.push('| ' + cells.join(' | ') + ' |');
+      }
+    }
+
+    return rows.length > 0 ? '\n' + rows.join('\n') + '\n' : '';
+  }
+});
+
 program
   .name('html-to-md')
   .description('Convert HTML to Markdown (powered by turndown)')

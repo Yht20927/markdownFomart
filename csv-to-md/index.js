@@ -21,6 +21,11 @@ function csvToMarkdownTable(csv, delimiter) {
   const rows = csv.trim().split('\n')
     .map(r => r.trim())
     .filter(r => r.length > 0)
+    // Skip visual separator rows (e.g. ---------,--------,--------,------ )
+    .filter(r => {
+      const stripped = r.split(delimiter).map(c => c.trim()).join('');
+      return !/^[-=~^:]+$/.test(stripped);
+    })
     .map(r => {
       // Parse CSV row respecting quotes
       const cells = [];

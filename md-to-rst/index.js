@@ -10,41 +10,63 @@ function mdToRst(md) {
 
   // Code blocks (extract first)
   const codeBlocks = [];
-  result = result.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, lang, code) => {
+  result = result.replace(/^[^\S\n]*```(\w*)\n([\s\S]*?)\n[^\S\n]*```/gm, (_m, lang, code) => {
     codeBlocks.push({ lang, code: code.trim() });
     return `<<CODEBLOCK_${codeBlocks.length - 1}>>`;
   });
 
+  // Also extract code blocks inside blockquotes
+  result = result.replace(/^> ```(\w*)\n((?:^> [^\n]*\n?)*?)^> ```/gm, (_m, lang, code) => {
+    const cleaned = code.split('\n').map(l => l.replace(/^> ?/, '')).join('\n').trim();
+    codeBlocks.push({ lang, code: cleaned });
+    return `> <<CODEBLOCK_${codeBlocks.length - 1}>>`;
+  });
+
+  // Protect footnote definitions [^label]: from link regex
+  const footnotes = [];
+  result = result.replace(/^\[\^(.+?)\]:\s*(.*)$/gm, (_m, label, content) => {
+    footnotes.push({ label, content });
+    return `<<FN_${footnotes.length - 1}>>`;
+  });
+
   // Headers — RST uses underline adornments
-  // # H1 → H1\n=====
-  result = result.replace(/^#\s+(.+)$/gm, '=====\n$1\n=====');
-  result = result.replace(/^##\s+(.+)$/gm, '$1\n=====');
-  result = result.replace(/^###\s+(.+)$/gm, '$1\n-----');
-  result = result.replace(/^####\s+(.+)$/gm, '$1\n~~~~~');
-  result = result.replace(/^#####\s+(.+)$/gm, '$1\n^^^^^');
-  result = result.replace(/^######\s+(.+)$/gm, '$1\n""""');
+  // Use underline-only (simpler, more compatible)
+  result = result.replace(/^######\s+(.+)$/gm, '$1\n""""\n');
+  result = result.replace(/^#####\s+(.+)$/gm, '$1\n^^^^^\n');
+  result = result.replace(/^####\s+(.+)$/gm, '$1\n~~~~~\n');
+  result = result.replace(/^###\s+(.+)$/gm, '$1\n-----\n');
+  result = result.replace(/^##\s+(.+)$/gm, '$1\n=====\n');
+  result = result.replace(/^#\s+(.+)$/gm, '$1\n=====\n');
 
   // Bold: **text** → **text**
   // Italic: *text* → *text*  (same in RST)
 
   // Inline code: `code` → ``code``
-  result = result.replace(/`(.+?)`/g, '``$1``');
+  result = result.replace(/`([^`]+)`/g, '``$1``');
+
+  // Images: ![alt](url) → .. image:: url\n   :alt: alt  (BEFORE links!)
+  result = result.replace(/!\[(.+?)\]\((.+?)\)/g, '.. image:: $2\n   :alt: $1\n');
 
   // Links: [text](url) → `text <url>`_
   result = result.replace(/\[(.+?)\]\((.+?)\)/g, '`$1 <$2>`_');
 
-  // Images: ![alt](url) → .. image:: url\n   :alt: alt
-  result = result.replace(/!\[(.+?)\]\((.+?)\)/g, '.. image:: $2\n   :alt: $1');
+  // Footnote references [^label] → RST [#label]_
+  result = result.replace(/\[\^(.+?)\]/g, '[#$1]_');
 
-  // Blockquotes → indented (simplified)
-  result = result.replace(/^>\s+(.+)$/gm, '    $1');
+  // Footnote refs [^label] → preserve
+  // (already handled by not matching link pattern since ^ is in brackets)
 
-  // Unordered lists: - → *
-  result = result.replace(/^[-+]\s+/gm, '* ');
+  // Blockquotes → handle multi-line blocks
+  result = result.replace(/((?:^>[^\n]*\n?)+)/gm, (match) => {
+    const lines = match.split('\n').map(l => l.replace(/^>\s?/, ''));
+    return lines.map(l => '    ' + l).join('\n') + '\n';
+  });
 
-  // Ordered lists: 1. → 1.  or use #. auto-numbering
-  // RST uses #. for auto-numbering
-  result = result.replace(/^\d+\.\s+/gm, '#. ');
+  // Unordered lists: preserve indentation for nested lists
+  result = result.replace(/^(\s*)[-*+]\s+/gm, '$1* ');
+
+  // Ordered lists: use #. for auto-numbering, preserve indentation
+  result = result.replace(/^(\s*)\d+\.\s+/gm, '$1#. ');
 
   // Horizontal rule: --- → ----
   result = result.replace(/^[-*]{3,}$/gm, '----');
@@ -54,7 +76,19 @@ function mdToRst(md) {
     const cb = codeBlocks[i];
     const langOpt = cb.lang ? `\n   :language: ${cb.lang}` : '';
     const indented = cb.code.split('\n').map(l => '   ' + l).join('\n');
-    result = result.replace(`<<CODEBLOCK_${i}>>`, `.. code::${langOpt}\n\n${indented}`);
+    const restored = `.. code::${langOpt}\n\n${indented}`;
+    result = result.replace(`> <<CODEBLOCK_${i}>>`, restored);
+    result = result.replace(`<<CODEBLOCK_${i}>>`, restored);
+  }
+
+  // Restore footnotes
+  for (let i = 0; i < footnotes.length; i++) {
+    const fn = footnotes[i];
+    // Process markdown in footnote content
+    let content = fn.content
+      .replace(/\*\*(.+?)\*\*/g, '**$1**')
+      .replace(/\[(.+?)\]\((.+?)\)/g, '`$1 <$2>`_');
+    result = result.replace(`<<FN_${i}>>`, `.. [${fn.label}] ${content}`);
   }
 
   result = result.replace(/\n{3,}/g, '\n\n').trim();

@@ -12,9 +12,23 @@ function mdToConfluence(md) {
 
   // Protect fenced code blocks before any other transforms
   const codeBlocks = [];
-  result = result.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, lang, code) => {
+  result = result.replace(/^[^\S\n]*```(\w*)\n([\s\S]*?)\n[^\S\n]*```/gm, (_m, lang, code) => {
     codeBlocks.push({ lang, code: code.trim() });
     return `__FENCED_${codeBlocks.length - 1}__`;
+  });
+
+  // Also extract code blocks inside blockquotes
+  result = result.replace(/^> ```(\w*)\n((?:^> [^\n]*\n?)*?)^> ```/gm, (_m, lang, code) => {
+    const cleaned = code.split('\n').map(l => l.replace(/^> ?/, '')).join('\n').trim();
+    codeBlocks.push({ lang, code: cleaned });
+    return `> __FENCED_${codeBlocks.length - 1}__`;
+  });
+
+  // Protect footnote definitions [^label]: from link regex
+  const footnotes = [];
+  result = result.replace(/^\[\^(.+?)\]:\s*(.*)$/gm, (_m, label, content) => {
+    footnotes.push({ label, content });
+    return `__FN_${footnotes.length - 1}__`;
   });
 
   // Headers
@@ -37,29 +51,53 @@ function mdToConfluence(md) {
   // Inline code: `code` → {{code}}
   result = result.replace(/`([^\n`]+)`/g, '{{$1}}');
 
+  // Images: ![alt](url) → !url!  (BEFORE links)
+  result = result.replace(/!\[(.+?)\]\((.+?)\)/g, '!$2!');
+
   // Links: [text](url) → [text|url]
   result = result.replace(/\[(.+?)\]\((.+?)\)/g, '[$1|$2]');
 
-  // Images: ![alt](url) → !url!
-  result = result.replace(/!\[(.+?)\]\((.+?)\)/g, '!$2!');
+  // Footnote references [^label] → keep as text (no native footnotes in Confluence)
+  result = result.replace(/\[\^(.+?)\]/g, '[fn:$1]');
 
-  // Blockquotes: > → bq.
-  result = result.replace(/^>\s+(.+)$/gm, 'bq. $1');
+  // Blockquotes: handle multi-line
+  result = result.replace(/((?:^>[^\n]*\n?)+)/gm, (match) => {
+    const lines = match.trim().split('\n').map(l => l.replace(/^>\s?/, '').trim()).filter(l => l);
+    return lines.map(l => 'bq. ' + l).join('\n') + '\n';
+  });
 
   // Horizontal rules: --- or *** → ----
   result = result.replace(/^[-*]{3,}$/gm, '----');
 
-  // Unordered lists
-  result = result.replace(/^[-*+]\s+/gm, '* ');
+  // Unordered lists — preserve indentation for nested levels (* → ** → ***)
+  result = result.replace(/^(\s*)[-*+]\s+/gm, (_m, indent) => {
+    // Each 2 spaces of indentation = one nesting level
+    const level = Math.floor(indent.length / 2) + 1;
+    return '*'.repeat(level) + ' ';
+  });
 
-  // Ordered lists: 1. → #
-  result = result.replace(/^\d+\.\s+/gm, '# ');
+  // Ordered lists — preserve indentation for nested levels (# → ## → ###)
+  result = result.replace(/^(\s*)\d+\.\s+/gm, (_m, indent) => {
+    const level = Math.floor(indent.length / 2) + 1;
+    return '#'.repeat(level) + ' ';
+  });
+
+  // Restore footnotes
+  for (let i = 0; i < footnotes.length; i++) {
+    const fn = footnotes[i];
+    let content = fn.content
+      .replace(/\*\*(.+?)\*\*/g, '*$1*')
+      .replace(/\[(.+?)\]\((.+?)\)/g, '[$1|$2]');
+    result = result.replace(`__FN_${i}__`, '\n[fn:' + fn.label + '] ' + content);
+  }
 
   // Restore code blocks
   for (let i = 0; i < codeBlocks.length; i++) {
     const cb = codeBlocks[i];
     const langAttr = cb.lang ? `:language=${cb.lang}` : '';
-    result = result.replace(`__FENCED_${i}__`, `{code${langAttr}}\n${cb.code}\n{code}`);
+    const restored = `{code${langAttr}}\n${cb.code}\n{code}`;
+    result = result.replace(`> __FENCED_${i}__`, restored);
+    result = result.replace(`__FENCED_${i}__`, restored);
   }
 
   return result.replace(/\n{3,}/g, '\n\n').trim();

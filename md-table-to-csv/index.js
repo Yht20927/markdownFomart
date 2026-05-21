@@ -16,7 +16,7 @@ function markdownTableToCSV(md) {
   for (const table of tables) {
     const lines = table.trim().split('\n');
     // Filter out separator line (| --- | --- |)
-    const dataLines = lines.filter(l => !/^\|[\s\-:]+\|$/.test(l));
+    const dataLines = lines.filter(l => !/^\|[\s\-:|]+\|$/.test(l));
 
     const rows = dataLines.map(line => {
       const cells = line.split('|')

@@ -19,21 +19,31 @@ function createRenderer({ Marked, katex, hljs }) {
 
   function processMath(md) {
     const codeBlocks = [];
-    let processed = md.replace(/```[\s\S]*?```/g, (m) => {
-      codeBlocks.push(m);
-      return `__CB_${codeBlocks.length - 1}__`;
+    // Match fenced code blocks at line start (allow leading whitespace).
+    // Require closing ``` on its own line to skip inline triple backticks.
+    // Blockquote code blocks (> ```) are excluded (Marked handles them natively).
+    let processed = md.replace(/^[^\S\n]*```(\w*)\n([\s\S]*?)\n[^\S\n]*```/gm, (_m, lang, code) => {
+      let highlighted;
+      if (lang && hljs && hljs.getLanguage(lang)) {
+        try { highlighted = hljs.highlight(code, { language: lang }).value; } catch { highlighted = escapeHtml(code); }
+      } else {
+        highlighted = escapeHtml(code);
+      }
+      const langClass = lang ? ` class="language-${lang}"` : '';
+      codeBlocks.push(`<pre><code${langClass}>${highlighted}</code></pre>`);
+      return `<!--CB:${codeBlocks.length - 1}-->`;
     });
 
     const inlineMath = [];
     processed = processed.replace(/(?<!\$)\$(?!\$)([^\$\n]+?)\$(?!\$)/g, (_m, tex) => {
       inlineMath.push(renderKatex(tex, false));
-      return `__IM_${inlineMath.length - 1}__`;
+      return `<!--IM:${inlineMath.length - 1}-->`;
     });
 
     const blockMath = [];
     processed = processed.replace(/\$\$([\s\S]*?)\$\$/g, (_m, tex) => {
       blockMath.push(renderKatex(tex, true));
-      return `__BM_${blockMath.length - 1}__`;
+      return `<!--BM:${blockMath.length - 1}-->`;
     });
 
     return { text: processed, codeBlocks, inlineMath, blockMath };
@@ -42,13 +52,13 @@ function createRenderer({ Marked, katex, hljs }) {
   function restorePlaceholders(html, codeBlocks, inlineMath, blockMath) {
     let result = html;
     for (let i = 0; i < inlineMath.length; i++) {
-      result = result.replace(`__IM_${i}__`, inlineMath[i]);
+      result = result.replace(`<!--IM:${i}-->`, inlineMath[i]);
     }
     for (let i = 0; i < blockMath.length; i++) {
-      result = result.replace(`__BM_${i}__`, blockMath[i]);
+      result = result.replace(`<!--BM:${i}-->`, blockMath[i]);
     }
     for (let i = 0; i < codeBlocks.length; i++) {
-      result = result.replace(`__CB_${i}__`, codeBlocks[i]);
+      result = result.replace(`<!--CB:${i}-->`, codeBlocks[i]);
     }
     return result;
   }
