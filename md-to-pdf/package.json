@@ -1,0 +1,21 @@
+{
+  "name": "md-to-pdf",
+  "version": "1.0.0",
+  "description": "Convert Markdown to PDF with 29 professional templates. Fast, local, zero-config.",
+  "main": "index.js",
+  "bin": {
+    "md-to-pdf": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["markdown", "pdf", "converter", "templates"],
+  "license": "MIT",
+  "dependencies": {
+    "marked": "^15.0.0",
+    "katex": "^0.16.0",
+    "highlight.js": "^11.9.0",
+    "puppeteer": "^24.0.0",
+    "commander": "^13.0.0"
+  }
+}

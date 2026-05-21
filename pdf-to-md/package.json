@@ -1,0 +1,10 @@
+{
+  "name": "pdf-to-md",
+  "version": "1.0.0",
+  "description": "Extract text from PDF and convert to Markdown. 100% local processing.",
+  "main": "index.js",
+  "dependencies": {
+    "pdf-parse": "^1.1.1",
+    "commander": "^13.0.0"
+  }
+}

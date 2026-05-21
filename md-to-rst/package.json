@@ -1,0 +1,9 @@
+{
+  "name": "md-to-rst",
+  "version": "1.0.0",
+  "description": "Convert Markdown to reStructuredText. Same approach as md-to.com.",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^13.0.0"
+  }
+}

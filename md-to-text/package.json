@@ -1,0 +1,9 @@
+{
+  "name": "md-to-text",
+  "version": "1.0.0",
+  "description": "Convert Markdown to clean plain text. Strips formatting exactly like md-to.com.",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^13.0.0"
+  }
+}

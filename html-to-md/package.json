@@ -1,0 +1,10 @@
+{
+  "name": "html-to-md",
+  "version": "1.0.0",
+  "description": "Convert HTML to Markdown using turndown — exact same library as md-to.com.",
+  "main": "index.js",
+  "dependencies": {
+    "turndown": "^7.2.0",
+    "commander": "^13.0.0"
+  }
+}

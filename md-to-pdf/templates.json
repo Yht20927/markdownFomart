@@ -1,0 +1,1481 @@
+[
+  {
+    "id": "classic",
+    "name": {
+      "en": "Classic",
+      "zh-cn": "经典",
+      "zh-tw": "經典",
+      "ja": "クラシック",
+      "fr": "Classique",
+      "pt": "Clássico",
+      "de": "Klassisch"
+    },
+    "category": "business",
+    "colors": {
+      "heading": "#2E74B5",
+      "text": "#000000",
+      "link": "#0563C1",
+      "codeBackground": "#F5F5F5",
+      "codeBorder": "#D4D4D4",
+      "codeText": "#333333",
+      "quoteText": "#666666",
+      "quoteBorder": "#CCCCCC",
+      "quoteBackground": "#F9F9F9",
+      "tableHeaderBg": "#F2F2F2",
+      "tableHeaderText": "#000000",
+      "tableBorder": "#BFBFBF",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F9F9F9"
+    },
+    "fonts": {
+      "heading": "Microsoft YaHei",
+      "body": "Microsoft YaHei",
+      "code": "Consolas"
+    },
+    "fontSizes": {
+      "h1": 16,
+      "h2": 14,
+      "h3": 13,
+      "h4": 12,
+      "h5": 11,
+      "h6": 10,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 18,
+      "headingAfter": 9,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "modern",
+    "name": {
+      "en": "Modern",
+      "zh-cn": "现代",
+      "zh-tw": "現代",
+      "ja": "モダン",
+      "fr": "Moderne",
+      "pt": "Moderno",
+      "de": "Modern"
+    },
+    "category": "tech",
+    "colors": {
+      "heading": "#1A1A2E",
+      "text": "#2D2D2D",
+      "link": "#6366F1",
+      "codeBackground": "#F8F8F8",
+      "codeBorder": "#E5E7EB",
+      "codeText": "#24292e",
+      "quoteText": "#4A5568",
+      "quoteBorder": "#6366F1",
+      "quoteBackground": "#F7F7FB",
+      "tableHeaderBg": "#6366F1",
+      "tableHeaderText": "#ffffff",
+      "tableBorder": "#E2E8F0",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F8FAFC"
+    },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter",
+      "code": "JetBrains Mono"
+    },
+    "fontSizes": {
+      "h1": 18,
+      "h2": 15,
+      "h3": 13,
+      "h4": 12,
+      "h5": 11,
+      "h6": 10,
+      "body": 11,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 24,
+      "headingAfter": 8,
+      "paragraphBefore": 4,
+      "paragraphAfter": 8,
+      "lineHeight": 1.6
+    }
+  },
+  {
+    "id": "minimal",
+    "name": {
+      "en": "Minimal",
+      "zh-cn": "简约",
+      "zh-tw": "簡約",
+      "ja": "ミニマル",
+      "fr": "Minimaliste",
+      "pt": "Minimalista",
+      "de": "Minimalistisch"
+    },
+    "category": "minimal",
+    "colors": {
+      "heading": "#111111",
+      "text": "#333333",
+      "link": "#111111",
+      "codeBackground": "#FAFAFA",
+      "codeBorder": "#EEEEEE",
+      "codeText": "#555555",
+      "quoteText": "#777777",
+      "quoteBorder": "#DDDDDD",
+      "quoteBackground": "#FAFAFA",
+      "tableHeaderBg": "#F5F5F5",
+      "tableHeaderText": "#333333",
+      "tableBorder": "#E0E0E0",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FAFAFA"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Fira Code"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 12,
+      "body": 12,
+      "code": 11
+    },
+    "spacing": {
+      "headingBefore": 32,
+      "headingAfter": 12,
+      "paragraphBefore": 8,
+      "paragraphAfter": 12,
+      "lineHeight": 1.8
+    }
+  },
+  {
+    "id": "ocean-blue-cjk-standard-standard",
+    "name": {
+      "en": "Ocean Blue / CJK Standard / Standard",
+      "zh-cn": "海洋蓝 / 中文标准 / 标准",
+      "zh-tw": "海洋藍 / 中文標準 / 標準",
+      "ja": "オーシャンブルー / CJK標準 / スタンダード",
+      "fr": "Bleu Océan / CJK Standard / Standard",
+      "pt": "Azul Oceano / CJK Padrão / Padrão",
+      "de": "Ozeanblau / CJK Standard / Standard"
+    },
+    "category": "business",
+    "colors": {
+      "heading": "#2E74B5",
+      "text": "#1F2937",
+      "link": "#0563C1",
+      "codeBackground": "#F8FAFC",
+      "codeBorder": "#E2E8F0",
+      "codeText": "#334155",
+      "quoteText": "#475569",
+      "quoteBorder": "#2E74B5",
+      "quoteBackground": "#F1F5F9",
+      "tableHeaderBg": "#2E74B5",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#CBD5E1",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F8FAFC"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "corporate-gray-cjk-standard-standard",
+    "name": {
+      "en": "Corporate Gray / CJK Standard / Standard",
+      "zh-cn": "商务灰 / 中文标准 / 标准",
+      "zh-tw": "商務灰 / 中文標準 / 標準",
+      "ja": "コーポレートグレー / CJK標準 / スタンダード",
+      "fr": "Gris Professionnel / CJK Standard / Standard",
+      "pt": "Cinza Corporativo / CJK Padrão / Padrão",
+      "de": "Unternehmensgrau / CJK Standard / Standard"
+    },
+    "category": "business",
+    "colors": {
+      "heading": "#374151",
+      "text": "#1F2937",
+      "link": "#4B5563",
+      "codeBackground": "#F9FAFB",
+      "codeBorder": "#E5E7EB",
+      "codeText": "#374151",
+      "quoteText": "#6B7280",
+      "quoteBorder": "#9CA3AF",
+      "quoteBackground": "#F3F4F6",
+      "tableHeaderBg": "#4B5563",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#D1D5DB",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F9FAFB"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "navy-gold-cjk-standard-standard",
+    "name": {
+      "en": "Navy Gold / CJK Standard / Standard",
+      "zh-cn": "藏青金 / 中文标准 / 标准",
+      "zh-tw": "藏青金 / 中文標準 / 標準",
+      "ja": "ネイビーゴールド / CJK標準 / スタンダード",
+      "fr": "Bleu Marine Doré / CJK Standard / Standard",
+      "pt": "Azul Marinho Dourado / CJK Padrão / Padrão",
+      "de": "Marineblau-Gold / CJK Standard / Standard"
+    },
+    "category": "business",
+    "colors": {
+      "heading": "#1E3A5F",
+      "text": "#1F2937",
+      "link": "#B8860B",
+      "codeBackground": "#FEFCE8",
+      "codeBorder": "#FDE68A",
+      "codeText": "#1E3A5F",
+      "quoteText": "#374151",
+      "quoteBorder": "#B8860B",
+      "quoteBackground": "#FFFBEB",
+      "tableHeaderBg": "#1E3A5F",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#D1D5DB",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FEFCE8"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "pure-mono-cjk-standard-standard",
+    "name": {
+      "en": "Pure Mono / CJK Standard / Standard",
+      "zh-cn": "纯净黑白 / 中文标准 / 标准",
+      "zh-tw": "純淨黑白 / 中文標準 / 標準",
+      "ja": "ピュアモノ / CJK標準 / スタンダード",
+      "fr": "Mono Pur / CJK Standard / Standard",
+      "pt": "Mono Puro / CJK Padrão / Padrão",
+      "de": "Reines Mono / CJK Standard / Standard"
+    },
+    "category": "minimal",
+    "colors": {
+      "heading": "#000000",
+      "text": "#1A1A1A",
+      "link": "#000000",
+      "codeBackground": "#FAFAFA",
+      "codeBorder": "#E5E5E5",
+      "codeText": "#262626",
+      "quoteText": "#525252",
+      "quoteBorder": "#A3A3A3",
+      "quoteBackground": "#FAFAFA",
+      "tableHeaderBg": "#171717",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#D4D4D4",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FAFAFA"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "warm-gray-cjk-standard-standard",
+    "name": {
+      "en": "Warm Gray / CJK Standard / Standard",
+      "zh-cn": "暖灰 / 中文标准 / 标准",
+      "zh-tw": "暖灰 / 中文標準 / 標準",
+      "ja": "ウォームグレー / CJK標準 / スタンダード",
+      "fr": "Gris Chaud / CJK Standard / Standard",
+      "pt": "Cinza Quente / CJK Padrão / Padrão",
+      "de": "Warmgrau / CJK Standard / Standard"
+    },
+    "category": "minimal",
+    "colors": {
+      "heading": "#292524",
+      "text": "#44403C",
+      "link": "#78716C",
+      "codeBackground": "#FAFAF9",
+      "codeBorder": "#E7E5E4",
+      "codeText": "#44403C",
+      "quoteText": "#57534E",
+      "quoteBorder": "#A8A29E",
+      "quoteBackground": "#F5F5F4",
+      "tableHeaderBg": "#57534E",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#D6D3D1",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FAFAF9"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "soft-ink-cjk-standard-standard",
+    "name": {
+      "en": "Soft Ink / CJK Standard / Standard",
+      "zh-cn": "柔墨 / 中文标准 / 标准",
+      "zh-tw": "柔墨 / 中文標準 / 標準",
+      "ja": "ソフトインク / CJK標準 / スタンダード",
+      "fr": "Encre Douce / CJK Standard / Standard",
+      "pt": "Tinta Suave / CJK Padrão / Padrão",
+      "de": "Sanfte Tinte / CJK Standard / Standard"
+    },
+    "category": "minimal",
+    "colors": {
+      "heading": "#18181B",
+      "text": "#3F3F46",
+      "link": "#52525B",
+      "codeBackground": "#FAFAFA",
+      "codeBorder": "#E4E4E7",
+      "codeText": "#3F3F46",
+      "quoteText": "#71717A",
+      "quoteBorder": "#D4D4D8",
+      "quoteBackground": "#F4F4F5",
+      "tableHeaderBg": "#3F3F46",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#D4D4D8",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FAFAFA"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "academic-green-serif-classic-standard",
+    "name": {
+      "en": "Academic Green / Classic Serif / Standard",
+      "zh-cn": "学术绿 / 经典衬线 / 标准",
+      "zh-tw": "學術綠 / 經典襯線 / 標準",
+      "ja": "アカデミックグリーン / クラシックセリフ / スタンダード",
+      "fr": "Vert Académique / Serif Classique / Standard",
+      "pt": "Verde Acadêmico / Serif Clássico / Padrão",
+      "de": "Akademisches Grün / Klassische Serifen / Standard"
+    },
+    "category": "academic",
+    "colors": {
+      "heading": "#166534",
+      "text": "#1F2937",
+      "link": "#15803D",
+      "codeBackground": "#F0FDF4",
+      "codeBorder": "#BBF7D0",
+      "codeText": "#166534",
+      "quoteText": "#374151",
+      "quoteBorder": "#22C55E",
+      "quoteBackground": "#DCFCE7",
+      "tableHeaderBg": "#166534",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#86EFAC",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F0FDF4"
+    },
+    "fonts": {
+      "heading": "Georgia",
+      "body": "Georgia",
+      "code": "Consolas"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "classic-sepia-serif-classic-standard",
+    "name": {
+      "en": "Classic Sepia / Classic Serif / Standard",
+      "zh-cn": "古典棕 / 经典衬线 / 标准",
+      "zh-tw": "古典棕 / 經典襯線 / 標準",
+      "ja": "クラシックセピア / クラシックセリフ / スタンダード",
+      "fr": "Sépia Classique / Serif Classique / Standard",
+      "pt": "Sépia Clássico / Serif Clássico / Padrão",
+      "de": "Klassisches Sepia / Klassische Serifen / Standard"
+    },
+    "category": "academic",
+    "colors": {
+      "heading": "#78350F",
+      "text": "#451A03",
+      "link": "#92400E",
+      "codeBackground": "#FFFBEB",
+      "codeBorder": "#FDE68A",
+      "codeText": "#78350F",
+      "quoteText": "#713F12",
+      "quoteBorder": "#D97706",
+      "quoteBackground": "#FEF3C7",
+      "tableHeaderBg": "#78350F",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#FCD34D",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FFFBEB"
+    },
+    "fonts": {
+      "heading": "Georgia",
+      "body": "Georgia",
+      "code": "Consolas"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "scholarly-wine-serif-classic-standard",
+    "name": {
+      "en": "Scholarly Wine / Classic Serif / Standard",
+      "zh-cn": "学院酒红 / 经典衬线 / 标准",
+      "zh-tw": "學院酒紅 / 經典襯線 / 標準",
+      "ja": "スカラリーワイン / クラシックセリフ / スタンダード",
+      "fr": "Vin Académique / Serif Classique / Standard",
+      "pt": "Vinho Acadêmico / Serif Clássico / Padrão",
+      "de": "Akademisches Weinrot / Klassische Serifen / Standard"
+    },
+    "category": "academic",
+    "colors": {
+      "heading": "#881337",
+      "text": "#1F2937",
+      "link": "#9F1239",
+      "codeBackground": "#FFF1F2",
+      "codeBorder": "#FECDD3",
+      "codeText": "#881337",
+      "quoteText": "#374151",
+      "quoteBorder": "#E11D48",
+      "quoteBackground": "#FFE4E6",
+      "tableHeaderBg": "#881337",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#FDA4AF",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FFF1F2"
+    },
+    "fonts": {
+      "heading": "Georgia",
+      "body": "Georgia",
+      "code": "Consolas"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "github-dark-sans-modern-standard",
+    "name": {
+      "en": "GitHub Style / Modern Sans / Standard",
+      "zh-cn": "GitHub 风格 / 现代无衬线 / 标准",
+      "zh-tw": "GitHub 風格 / 現代無襯線 / 標準",
+      "ja": "GitHubスタイル / モダンサンズ / スタンダード",
+      "fr": "Style GitHub / Sans Moderne / Standard",
+      "pt": "Estilo GitHub / Sans Moderno / Padrão",
+      "de": "GitHub-Stil / Moderne Sans / Standard"
+    },
+    "category": "tech",
+    "colors": {
+      "heading": "#24292F",
+      "text": "#1F2328",
+      "link": "#0969DA",
+      "codeBackground": "#F6F8FA",
+      "codeBorder": "#D0D7DE",
+      "codeText": "#24292F",
+      "quoteText": "#656D76",
+      "quoteBorder": "#D0D7DE",
+      "quoteBackground": "#F6F8FA",
+      "tableHeaderBg": "#F6F8FA",
+      "tableHeaderText": "#24292F",
+      "tableBorder": "#D0D7DE",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F6F8FA"
+    },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter",
+      "code": "JetBrains Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "vscode-blue-sans-modern-standard",
+    "name": {
+      "en": "VS Code Blue / Modern Sans / Standard",
+      "zh-cn": "VS Code 蓝 / 现代无衬线 / 标准",
+      "zh-tw": "VS Code 藍 / 現代無襯線 / 標準",
+      "ja": "VSCodeブルー / モダンサンズ / スタンダード",
+      "fr": "VS Code Bleu / Sans Moderne / Standard",
+      "pt": "VS Code Azul / Sans Moderno / Padrão",
+      "de": "VS Code Blau / Moderne Sans / Standard"
+    },
+    "category": "tech",
+    "colors": {
+      "heading": "#007ACC",
+      "text": "#1E1E1E",
+      "link": "#007ACC",
+      "codeBackground": "#1E1E1E",
+      "codeBorder": "#3C3C3C",
+      "codeText": "#D4D4D4",
+      "quoteText": "#6A9955",
+      "quoteBorder": "#007ACC",
+      "quoteBackground": "#252526",
+      "tableHeaderBg": "#007ACC",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#3C3C3C",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F3F3F3"
+    },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter",
+      "code": "JetBrains Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "terminal-green-sans-modern-standard",
+    "name": {
+      "en": "Terminal Green / Modern Sans / Standard",
+      "zh-cn": "终端绿 / 现代无衬线 / 标准",
+      "zh-tw": "終端綠 / 現代無襯線 / 標準",
+      "ja": "ターミナルグリーン / モダンサンズ / スタンダード",
+      "fr": "Terminal Vert / Sans Moderne / Standard",
+      "pt": "Terminal Verde / Sans Moderno / Padrão",
+      "de": "Terminal Grün / Moderne Sans / Standard"
+    },
+    "category": "tech",
+    "colors": {
+      "heading": "#22C55E",
+      "text": "#1F2937",
+      "link": "#16A34A",
+      "codeBackground": "#0F172A",
+      "codeBorder": "#1E293B",
+      "codeText": "#22C55E",
+      "quoteText": "#64748B",
+      "quoteBorder": "#22C55E",
+      "quoteBackground": "#F0FDF4",
+      "tableHeaderBg": "#166534",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#334155",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F0FDF4"
+    },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter",
+      "code": "JetBrains Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "dracula-purple-sans-modern-standard",
+    "name": {
+      "en": "Dracula Purple / Modern Sans / Standard",
+      "zh-cn": "Dracula 紫 / 现代无衬线 / 标准",
+      "zh-tw": "Dracula 紫 / 現代無襯線 / 標準",
+      "ja": "ドラキュラパープル / モダンサンズ / スタンダード",
+      "fr": "Dracula Violet / Sans Moderne / Standard",
+      "pt": "Drácula Roxo / Sans Moderno / Padrão",
+      "de": "Dracula Lila / Moderne Sans / Standard"
+    },
+    "category": "tech",
+    "colors": {
+      "heading": "#BD93F9",
+      "text": "#374151",
+      "link": "#8BE9FD",
+      "codeBackground": "#282A36",
+      "codeBorder": "#44475A",
+      "codeText": "#F8F8F2",
+      "quoteText": "#6272A4",
+      "quoteBorder": "#BD93F9",
+      "quoteBackground": "#F5F3FF",
+      "tableHeaderBg": "#6D28D9",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#A78BFA",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F5F3FF"
+    },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter",
+      "code": "JetBrains Mono"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "sunset-orange-mixed-elegant-standard",
+    "name": {
+      "en": "Sunset Orange / Elegant Mix / Standard",
+      "zh-cn": "日落橙 / 优雅混搭 / 标准",
+      "zh-tw": "日落橙 / 優雅混搭 / 標準",
+      "ja": "サンセットオレンジ / エレガントミックス / スタンダード",
+      "fr": "Orange Coucher de Soleil / Mélange Élégant / Standard",
+      "pt": "Laranja Pôr do Sol / Mistura Elegante / Padrão",
+      "de": "Sonnenorange / Eleganter Mix / Standard"
+    },
+    "category": "creative",
+    "colors": {
+      "heading": "#EA580C",
+      "text": "#1F2937",
+      "link": "#F97316",
+      "codeBackground": "#FFF7ED",
+      "codeBorder": "#FED7AA",
+      "codeText": "#9A3412",
+      "quoteText": "#78350F",
+      "quoteBorder": "#F97316",
+      "quoteBackground": "#FFEDD5",
+      "tableHeaderBg": "#EA580C",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#FDBA74",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FFF7ED"
+    },
+    "fonts": {
+      "heading": "Playfair Display",
+      "body": "Source Sans Pro",
+      "code": "Fira Code"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "sakura-pink-mixed-elegant-standard",
+    "name": {
+      "en": "Sakura Pink / Elegant Mix / Standard",
+      "zh-cn": "樱花粉 / 优雅混搭 / 标准",
+      "zh-tw": "櫻花粉 / 優雅混搭 / 標準",
+      "ja": "桜ピンク / エレガントミックス / スタンダード",
+      "fr": "Rose Sakura / Mélange Élégant / Standard",
+      "pt": "Rosa Sakura / Mistura Elegante / Padrão",
+      "de": "Sakura Rosa / Eleganter Mix / Standard"
+    },
+    "category": "creative",
+    "colors": {
+      "heading": "#DB2777",
+      "text": "#1F2937",
+      "link": "#EC4899",
+      "codeBackground": "#FDF2F8",
+      "codeBorder": "#FBCFE8",
+      "codeText": "#9D174D",
+      "quoteText": "#831843",
+      "quoteBorder": "#EC4899",
+      "quoteBackground": "#FCE7F3",
+      "tableHeaderBg": "#DB2777",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#F9A8D4",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FDF2F8"
+    },
+    "fonts": {
+      "heading": "Playfair Display",
+      "body": "Source Sans Pro",
+      "code": "Fira Code"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "ocean-teal-mixed-elegant-standard",
+    "name": {
+      "en": "Ocean Teal / Elegant Mix / Standard",
+      "zh-cn": "海洋青 / 优雅混搭 / 标准",
+      "zh-tw": "海洋青 / 優雅混搭 / 標準",
+      "ja": "オーシャンティール / エレガントミックス / スタンダード",
+      "fr": "Bleu-vert Océan / Mélange Élégant / Standard",
+      "pt": "Verde-azulado Oceano / Mistura Elegante / Padrão",
+      "de": "Ozeantürkis / Eleganter Mix / Standard"
+    },
+    "category": "creative",
+    "colors": {
+      "heading": "#0D9488",
+      "text": "#1F2937",
+      "link": "#14B8A6",
+      "codeBackground": "#F0FDFA",
+      "codeBorder": "#99F6E4",
+      "codeText": "#0F766E",
+      "quoteText": "#134E4A",
+      "quoteBorder": "#14B8A6",
+      "quoteBackground": "#CCFBF1",
+      "tableHeaderBg": "#0D9488",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#5EEAD4",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F0FDFA"
+    },
+    "fonts": {
+      "heading": "Playfair Display",
+      "body": "Source Sans Pro",
+      "code": "Fira Code"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "lavender-dream-mixed-elegant-standard",
+    "name": {
+      "en": "Lavender Dream / Elegant Mix / Standard",
+      "zh-cn": "薰衣草紫 / 优雅混搭 / 标准",
+      "zh-tw": "薰衣草紫 / 優雅混搭 / 標準",
+      "ja": "ラベンダードリーム / エレガントミックス / スタンダード",
+      "fr": "Rêve Lavande / Mélange Élégant / Standard",
+      "pt": "Sonho Lavanda / Mistura Elegante / Padrão",
+      "de": "Lavendeltraum / Eleganter Mix / Standard"
+    },
+    "category": "creative",
+    "colors": {
+      "heading": "#7C3AED",
+      "text": "#1F2937",
+      "link": "#8B5CF6",
+      "codeBackground": "#F5F3FF",
+      "codeBorder": "#DDD6FE",
+      "codeText": "#5B21B6",
+      "quoteText": "#4C1D95",
+      "quoteBorder": "#8B5CF6",
+      "quoteBackground": "#EDE9FE",
+      "tableHeaderBg": "#7C3AED",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#C4B5FD",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F5F3FF"
+    },
+    "fonts": {
+      "heading": "Playfair Display",
+      "body": "Source Sans Pro",
+      "code": "Fira Code"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "forest-moss-mixed-elegant-standard",
+    "name": {
+      "en": "Forest Moss / Elegant Mix / Standard",
+      "zh-cn": "森林苔藓 / 优雅混搭 / 标准",
+      "zh-tw": "森林苔蘚 / 優雅混搭 / 標準",
+      "ja": "フォレストモス / エレガントミックス / スタンダード",
+      "fr": "Mousse Forestière / Mélange Élégant / Standard",
+      "pt": "Musgo Florestal / Mistura Elegante / Padrão",
+      "de": "Waldmoos / Eleganter Mix / Standard"
+    },
+    "category": "creative",
+    "colors": {
+      "heading": "#4D7C0F",
+      "text": "#1F2937",
+      "link": "#65A30D",
+      "codeBackground": "#F7FEE7",
+      "codeBorder": "#BEF264",
+      "codeText": "#3F6212",
+      "quoteText": "#365314",
+      "quoteBorder": "#84CC16",
+      "quoteBackground": "#ECFCCB",
+      "tableHeaderBg": "#4D7C0F",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#A3E635",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F7FEE7"
+    },
+    "fonts": {
+      "heading": "Playfair Display",
+      "body": "Source Sans Pro",
+      "code": "Fira Code"
+    },
+    "fontSizes": {
+      "h1": 20,
+      "h2": 16,
+      "h3": 14,
+      "h4": 13,
+      "h5": 12,
+      "h6": 11,
+      "body": 12,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 20,
+      "headingAfter": 8,
+      "paragraphBefore": 6,
+      "paragraphAfter": 6,
+      "lineHeight": 1.5
+    }
+  },
+  {
+    "id": "ocean-blue-cjk-standard-compact",
+    "name": {
+      "en": "Ocean Blue / CJK Standard / Compact",
+      "zh-cn": "海洋蓝 / 中文标准 / 紧凑",
+      "zh-tw": "海洋藍 / 中文標準 / 緊湊",
+      "ja": "オーシャンブルー / CJK標準 / コンパクト",
+      "fr": "Bleu Océan / CJK Standard / Compact",
+      "pt": "Azul Oceano / CJK Padrão / Compacto",
+      "de": "Ozeanblau / CJK Standard / Kompakt"
+    },
+    "category": "business",
+    "colors": {
+      "heading": "#2E74B5",
+      "text": "#1F2937",
+      "link": "#0563C1",
+      "codeBackground": "#F8FAFC",
+      "codeBorder": "#E2E8F0",
+      "codeText": "#334155",
+      "quoteText": "#475569",
+      "quoteBorder": "#2E74B5",
+      "quoteBackground": "#F1F5F9",
+      "tableHeaderBg": "#2E74B5",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#CBD5E1",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F8FAFC"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 18,
+      "h2": 15,
+      "h3": 13,
+      "h4": 12,
+      "h5": 11,
+      "h6": 10,
+      "body": 11,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 16,
+      "headingAfter": 6,
+      "paragraphBefore": 4,
+      "paragraphAfter": 4,
+      "lineHeight": 1.4
+    }
+  },
+  {
+    "id": "ocean-blue-cjk-standard-relaxed",
+    "name": {
+      "en": "Ocean Blue / CJK Standard / Relaxed",
+      "zh-cn": "海洋蓝 / 中文标准 / 宽松",
+      "zh-tw": "海洋藍 / 中文標準 / 寬鬆",
+      "ja": "オーシャンブルー / CJK標準 / リラックス",
+      "fr": "Bleu Océan / CJK Standard / Aéré",
+      "pt": "Azul Oceano / CJK Padrão / Espaçado",
+      "de": "Ozeanblau / CJK Standard / Locker"
+    },
+    "category": "business",
+    "colors": {
+      "heading": "#2E74B5",
+      "text": "#1F2937",
+      "link": "#0563C1",
+      "codeBackground": "#F8FAFC",
+      "codeBorder": "#E2E8F0",
+      "codeText": "#334155",
+      "quoteText": "#475569",
+      "quoteBorder": "#2E74B5",
+      "quoteBackground": "#F1F5F9",
+      "tableHeaderBg": "#2E74B5",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#CBD5E1",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F8FAFC"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 24,
+      "h2": 18,
+      "h3": 15,
+      "h4": 14,
+      "h5": 13,
+      "h6": 12,
+      "body": 13,
+      "code": 11
+    },
+    "spacing": {
+      "headingBefore": 28,
+      "headingAfter": 12,
+      "paragraphBefore": 8,
+      "paragraphAfter": 10,
+      "lineHeight": 1.7
+    }
+  },
+  {
+    "id": "pure-mono-cjk-standard-compact",
+    "name": {
+      "en": "Pure Mono / CJK Standard / Compact",
+      "zh-cn": "纯净黑白 / 中文标准 / 紧凑",
+      "zh-tw": "純淨黑白 / 中文標準 / 緊湊",
+      "ja": "ピュアモノ / CJK標準 / コンパクト",
+      "fr": "Mono Pur / CJK Standard / Compact",
+      "pt": "Mono Puro / CJK Padrão / Compacto",
+      "de": "Reines Mono / CJK Standard / Kompakt"
+    },
+    "category": "minimal",
+    "colors": {
+      "heading": "#000000",
+      "text": "#1A1A1A",
+      "link": "#000000",
+      "codeBackground": "#FAFAFA",
+      "codeBorder": "#E5E5E5",
+      "codeText": "#262626",
+      "quoteText": "#525252",
+      "quoteBorder": "#A3A3A3",
+      "quoteBackground": "#FAFAFA",
+      "tableHeaderBg": "#171717",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#D4D4D4",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FAFAFA"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 18,
+      "h2": 15,
+      "h3": 13,
+      "h4": 12,
+      "h5": 11,
+      "h6": 10,
+      "body": 11,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 16,
+      "headingAfter": 6,
+      "paragraphBefore": 4,
+      "paragraphAfter": 4,
+      "lineHeight": 1.4
+    }
+  },
+  {
+    "id": "pure-mono-cjk-standard-relaxed",
+    "name": {
+      "en": "Pure Mono / CJK Standard / Relaxed",
+      "zh-cn": "纯净黑白 / 中文标准 / 宽松",
+      "zh-tw": "純淨黑白 / 中文標準 / 寬鬆",
+      "ja": "ピュアモノ / CJK標準 / リラックス",
+      "fr": "Mono Pur / CJK Standard / Aéré",
+      "pt": "Mono Puro / CJK Padrão / Espaçado",
+      "de": "Reines Mono / CJK Standard / Locker"
+    },
+    "category": "minimal",
+    "colors": {
+      "heading": "#000000",
+      "text": "#1A1A1A",
+      "link": "#000000",
+      "codeBackground": "#FAFAFA",
+      "codeBorder": "#E5E5E5",
+      "codeText": "#262626",
+      "quoteText": "#525252",
+      "quoteBorder": "#A3A3A3",
+      "quoteBackground": "#FAFAFA",
+      "tableHeaderBg": "#171717",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#D4D4D4",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FAFAFA"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 24,
+      "h2": 18,
+      "h3": 15,
+      "h4": 14,
+      "h5": 13,
+      "h6": 12,
+      "body": 13,
+      "code": 11
+    },
+    "spacing": {
+      "headingBefore": 28,
+      "headingAfter": 12,
+      "paragraphBefore": 8,
+      "paragraphAfter": 10,
+      "lineHeight": 1.7
+    }
+  },
+  {
+    "id": "github-dark-sans-modern-compact",
+    "name": {
+      "en": "GitHub Style / Modern Sans / Compact",
+      "zh-cn": "GitHub 风格 / 现代无衬线 / 紧凑",
+      "zh-tw": "GitHub 風格 / 現代無襯線 / 緊湊",
+      "ja": "GitHubスタイル / モダンサンズ / コンパクト",
+      "fr": "Style GitHub / Sans Moderne / Compact",
+      "pt": "Estilo GitHub / Sans Moderno / Compacto",
+      "de": "GitHub-Stil / Moderne Sans / Kompakt"
+    },
+    "category": "tech",
+    "colors": {
+      "heading": "#24292F",
+      "text": "#1F2328",
+      "link": "#0969DA",
+      "codeBackground": "#F6F8FA",
+      "codeBorder": "#D0D7DE",
+      "codeText": "#24292F",
+      "quoteText": "#656D76",
+      "quoteBorder": "#D0D7DE",
+      "quoteBackground": "#F6F8FA",
+      "tableHeaderBg": "#F6F8FA",
+      "tableHeaderText": "#24292F",
+      "tableBorder": "#D0D7DE",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F6F8FA"
+    },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter",
+      "code": "JetBrains Mono"
+    },
+    "fontSizes": {
+      "h1": 18,
+      "h2": 15,
+      "h3": 13,
+      "h4": 12,
+      "h5": 11,
+      "h6": 10,
+      "body": 11,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 16,
+      "headingAfter": 6,
+      "paragraphBefore": 4,
+      "paragraphAfter": 4,
+      "lineHeight": 1.4
+    }
+  },
+  {
+    "id": "github-dark-sans-modern-relaxed",
+    "name": {
+      "en": "GitHub Style / Modern Sans / Relaxed",
+      "zh-cn": "GitHub 风格 / 现代无衬线 / 宽松",
+      "zh-tw": "GitHub 風格 / 現代無襯線 / 寬鬆",
+      "ja": "GitHubスタイル / モダンサンズ / リラックス",
+      "fr": "Style GitHub / Sans Moderne / Aéré",
+      "pt": "Estilo GitHub / Sans Moderno / Espaçado",
+      "de": "GitHub-Stil / Moderne Sans / Locker"
+    },
+    "category": "tech",
+    "colors": {
+      "heading": "#24292F",
+      "text": "#1F2328",
+      "link": "#0969DA",
+      "codeBackground": "#F6F8FA",
+      "codeBorder": "#D0D7DE",
+      "codeText": "#24292F",
+      "quoteText": "#656D76",
+      "quoteBorder": "#D0D7DE",
+      "quoteBackground": "#F6F8FA",
+      "tableHeaderBg": "#F6F8FA",
+      "tableHeaderText": "#24292F",
+      "tableBorder": "#D0D7DE",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#F6F8FA"
+    },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter",
+      "code": "JetBrains Mono"
+    },
+    "fontSizes": {
+      "h1": 24,
+      "h2": 18,
+      "h3": 15,
+      "h4": 14,
+      "h5": 13,
+      "h6": 12,
+      "body": 13,
+      "code": 11
+    },
+    "spacing": {
+      "headingBefore": 28,
+      "headingAfter": 12,
+      "paragraphBefore": 8,
+      "paragraphAfter": 10,
+      "lineHeight": 1.7
+    }
+  },
+  {
+    "id": "sunset-orange-cjk-standard-compact",
+    "name": {
+      "en": "Sunset Orange / CJK Standard / Compact",
+      "zh-cn": "日落橙 / 中文标准 / 紧凑",
+      "zh-tw": "日落橙 / 中文標準 / 緊湊",
+      "ja": "サンセットオレンジ / CJK標準 / コンパクト",
+      "fr": "Orange Coucher de Soleil / CJK Standard / Compact",
+      "pt": "Laranja Pôr do Sol / CJK Padrão / Compacto",
+      "de": "Sonnenorange / CJK Standard / Kompakt"
+    },
+    "category": "creative",
+    "colors": {
+      "heading": "#EA580C",
+      "text": "#1F2937",
+      "link": "#F97316",
+      "codeBackground": "#FFF7ED",
+      "codeBorder": "#FED7AA",
+      "codeText": "#9A3412",
+      "quoteText": "#78350F",
+      "quoteBorder": "#F97316",
+      "quoteBackground": "#FFEDD5",
+      "tableHeaderBg": "#EA580C",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#FDBA74",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FFF7ED"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 18,
+      "h2": 15,
+      "h3": 13,
+      "h4": 12,
+      "h5": 11,
+      "h6": 10,
+      "body": 11,
+      "code": 10
+    },
+    "spacing": {
+      "headingBefore": 16,
+      "headingAfter": 6,
+      "paragraphBefore": 4,
+      "paragraphAfter": 4,
+      "lineHeight": 1.4
+    }
+  },
+  {
+    "id": "sunset-orange-cjk-standard-relaxed",
+    "name": {
+      "en": "Sunset Orange / CJK Standard / Relaxed",
+      "zh-cn": "日落橙 / 中文标准 / 宽松",
+      "zh-tw": "日落橙 / 中文標準 / 寬鬆",
+      "ja": "サンセットオレンジ / CJK標準 / リラックス",
+      "fr": "Orange Coucher de Soleil / CJK Standard / Aéré",
+      "pt": "Laranja Pôr do Sol / CJK Padrão / Espaçado",
+      "de": "Sonnenorange / CJK Standard / Locker"
+    },
+    "category": "creative",
+    "colors": {
+      "heading": "#EA580C",
+      "text": "#1F2937",
+      "link": "#F97316",
+      "codeBackground": "#FFF7ED",
+      "codeBorder": "#FED7AA",
+      "codeText": "#9A3412",
+      "quoteText": "#78350F",
+      "quoteBorder": "#F97316",
+      "quoteBackground": "#FFEDD5",
+      "tableHeaderBg": "#EA580C",
+      "tableHeaderText": "#FFFFFF",
+      "tableBorder": "#FDBA74",
+      "tableRowOdd": "#FFFFFF",
+      "tableRowEven": "#FFF7ED"
+    },
+    "fonts": {
+      "heading": "Noto Serif SC",
+      "body": "Noto Sans SC",
+      "code": "Noto Sans Mono"
+    },
+    "fontSizes": {
+      "h1": 24,
+      "h2": 18,
+      "h3": 15,
+      "h4": 14,
+      "h5": 13,
+      "h6": 12,
+      "body": 13,
+      "code": 11
+    },
+    "spacing": {
+      "headingBefore": 28,
+      "headingAfter": 12,
+      "paragraphBefore": 8,
+      "paragraphAfter": 10,
+      "lineHeight": 1.7
+    }
+  }
+]

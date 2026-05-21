@@ -1,0 +1,11 @@
+{
+  "name": "word-to-md",
+  "version": "1.0.0",
+  "description": "Convert Word (.docx) to Markdown — mammoth + turndown, same pipeline as md-to.com.",
+  "main": "index.js",
+  "dependencies": {
+    "mammoth": "^1.8.0",
+    "turndown": "^7.2.0",
+    "commander": "^13.0.0"
+  }
+}

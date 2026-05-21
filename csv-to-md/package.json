@@ -1,0 +1,9 @@
+{
+  "name": "csv-to-md",
+  "version": "1.0.0",
+  "description": "Convert CSV data to Markdown tables. Same logic as md-to.com's table-converters.",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^13.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "md-to-confluence",
+  "version": "1.0.0",
+  "description": "Convert Markdown to Confluence wiki markup. Same approach as md-to.com.",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^13.0.0"
+  }
+}

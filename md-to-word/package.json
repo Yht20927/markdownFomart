@@ -1,0 +1,12 @@
+{
+  "name": "md-to-word",
+  "version": "1.0.0",
+  "description": "Convert Markdown to Word (.docx). Uses mso-compatible HTML, same approach as md-to.com.",
+  "main": "index.js",
+  "dependencies": {
+    "marked": "^15.0.0",
+    "katex": "^0.16.0",
+    "highlight.js": "^11.9.0",
+    "commander": "^13.0.0"
+  }
+}

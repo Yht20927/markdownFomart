@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+const { program } = require('commander');
+const mammoth = require('mammoth');
+const TurndownService = require('turndown');
+const fs = require('fs');
+const path = require('path');
+
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8'));
+
+// Same pipeline as md-to.com: mammoth → HTML → turndown → Markdown
+const turndown = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
+
+program
+  .name('word-to-md')
+  .description('Convert Word (.docx) to Markdown')
+  .version(pkg.version);
+
+program.command('convert')
+  .description('Convert a .docx file to Markdown')
+  .requiredOption('-i, --input <file>', 'Input .docx file')
+  .requiredOption('-o, --output <file>', 'Output Markdown file')
+  .action(async (opts) => {
+    const input = path.resolve(opts.input);
+    const output = path.resolve(opts.output);
+    if (!fs.existsSync(input)) { console.error('Input file not found'); process.exit(1); }
+    if (!input.toLowerCase().endsWith('.docx')) { console.error('Input must be a .docx file'); process.exit(1); }
+    try {
+      const buf = fs.readFileSync(input);
+      const result = await mammoth.convertToHtml({ buffer: buf });
+      const md = turndown.turndown(result.value);
+      fs.writeFileSync(output, md, 'utf-8');
+      console.log(`Done: ${output} (${md.length} chars)`);
+      if (result.messages.length > 0) console.log('Messages:', result.messages.map(m => m.message).join('; '));
+    } catch (e) {
+      console.error('Error:', e.message);
+      process.exit(1);
+    }
+  });
+
+program.parse();
