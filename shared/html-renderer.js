@@ -4,7 +4,8 @@ function createRenderer({ Marked, katex, hljs }) {
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 
   function renderKatex(tex, displayMode) {
@@ -75,8 +76,9 @@ function createRenderer({ Marked, katex, hljs }) {
       },
       breaks: true,
       gfm: true,
+      async: false,
     });
-    const html = marked.parse(text);
+    const html = marked.parse(text, { async: false });
     return restorePlaceholders(html, codeBlocks, inlineMath, blockMath);
   }
 

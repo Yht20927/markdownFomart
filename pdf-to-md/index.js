@@ -2,6 +2,7 @@
 const { program } = require('commander');
 const fs = require('fs');
 const path = require('path');
+const { resolveInOut, handleError } = require('../shared/cli');
 
 const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8'));
 
@@ -14,23 +15,30 @@ program.command('convert')
   .description('Convert a PDF file to Markdown')
   .requiredOption('-i, --input <file>', 'Input PDF file')
   .requiredOption('-o, --output <file>', 'Output Markdown file')
+  .option('--allow-empty', 'Allow empty output (e.g. for scanned/image PDFs)')
   .action(async (opts) => {
-    const input = path.resolve(opts.input);
-    const output = path.resolve(opts.output);
-    if (!fs.existsSync(input)) { console.error('Input file not found'); process.exit(1); }
-    if (!input.toLowerCase().endsWith('.pdf')) { console.error('Input must be a .pdf file'); process.exit(1); }
     try {
+      const { input, output } = resolveInOut(opts);
+      if (!fs.existsSync(input)) { console.error('Input file not found'); process.exit(1); }
+      if (!input.toLowerCase().endsWith('.pdf')) { console.error('Input must be a .pdf file'); process.exit(1); }
+
       const pdfParse = require('pdf-parse');
       const buf = fs.readFileSync(input);
       const data = await pdfParse(buf);
       const text = data.text || '';
-      if (!text.trim()) { console.log('No text could be extracted from this PDF'); process.exit(0); }
+
+      // P0-21: Exit with code 1 for empty text, unless --allow-empty
+      if (!text.trim()) {
+        if (opts.allowEmpty) {
+          console.log('No text could be extracted from this PDF (--allow-empty enabled)');
+        } else {
+          console.error('No text could be extracted from this PDF (possibly scanned/image PDF). Use --allow-empty to suppress this error.');
+          process.exit(1);
+        }
+      }
       fs.writeFileSync(output, text, 'utf-8');
       console.log(`Done: ${output} (${text.length} chars, ${data.numpages} pages)`);
-    } catch (e) {
-      console.error('Error:', e.message);
-      process.exit(1);
-    }
+    } catch (e) { handleError(e); }
   });
 
 program.parse();

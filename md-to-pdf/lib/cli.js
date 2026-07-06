@@ -1,6 +1,6 @@
 const { program } = require('commander');
 const { listTemplates, getTemplate, listAllTemplateIds, getCategories } = require('./templates');
-const { convertFile, closeBrowser } = require('./converter');
+const { convertFile } = require('./converter');
 const path = require('path');
 const fs = require('fs');
 
@@ -66,8 +66,6 @@ program
     } catch (err) {
       console.error(`Error: ${err.message}`);
       process.exit(1);
-    } finally {
-      await closeBrowser();
     }
   });
 
@@ -76,26 +74,31 @@ program
   .description('Show detailed info about a theme')
   .argument('<theme-id>', 'Theme ID')
   .action((themeId) => {
-    const template = getTemplate(themeId);
-    console.log(`\nTheme: ${template.name.en} (${template.name['zh-cn']})`);
-    console.log(`Category: ${template.category}`);
-    console.log(`\nColors:`);
-    for (const [k, v] of Object.entries(template.colors)) {
-      console.log(`  ${k}: ${v}`);
+    try {
+      const template = getTemplate(themeId);
+      console.log(`\nTheme: ${template.name.en} (${template.name['zh-cn']})`);
+      console.log(`Category: ${template.category}`);
+      console.log(`\nColors:`);
+      for (const [k, v] of Object.entries(template.colors)) {
+        console.log(`  ${k}: ${v}`);
+      }
+      console.log(`\nFonts:`);
+      for (const [k, v] of Object.entries(template.fonts)) {
+        console.log(`  ${k}: ${v}`);
+      }
+      console.log(`\nFont Sizes (pt):`);
+      for (const [k, v] of Object.entries(template.fontSizes)) {
+        console.log(`  ${k}: ${v}`);
+      }
+      console.log(`\nSpacing (pt):`);
+      for (const [k, v] of Object.entries(template.spacing)) {
+        console.log(`  ${k}: ${v}`);
+      }
+      console.log();
+    } catch (err) {
+      console.error(`Error: ${err.message}`);
+      process.exit(1);
     }
-    console.log(`\nFonts:`);
-    for (const [k, v] of Object.entries(template.fonts)) {
-      console.log(`  ${k}: ${v}`);
-    }
-    console.log(`\nFont Sizes (pt):`);
-    for (const [k, v] of Object.entries(template.fontSizes)) {
-      console.log(`  ${k}: ${v}`);
-    }
-    console.log(`\nSpacing (pt):`);
-    for (const [k, v] of Object.entries(template.spacing)) {
-      console.log(`  ${k}: ${v}`);
-    }
-    console.log();
   });
 
 module.exports = { program };

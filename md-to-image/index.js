@@ -4,7 +4,8 @@ const { Marked } = require('marked');
 const katex = require('katex');
 const hljs = require('highlight.js');
 const { createRenderer } = require('../shared/html-renderer');
-const puppeteer = require('puppeteer');
+const { withPage } = require('../shared/browser-pool');
+const { buildHtmlPage } = require('../shared/html-page');
 const fs = require('fs');
 const path = require('path');
 
@@ -12,25 +13,27 @@ const { renderMarkdown } = createRenderer({ Marked, katex, hljs });
 
 const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8'));
 
-const pageCss = `
-  body { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; color: #1F2937; line-height: 1.6; padding: 48px; margin: 0; max-width: 800px; background: #fff; }
-  h1 { font-size: 28px; color: #111; margin-top: 24px; margin-bottom: 12px; }
-  h2 { font-size: 22px; color: #222; margin-top: 20px; margin-bottom: 10px; }
-  pre { background: #F6F8FA; border: 1px solid #D0D7DE; border-radius: 6px; padding: 16px; overflow-x: auto; font-size: 13px; }
-  code { font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 13px; }
-  blockquote { border-left: 4px solid #D0D7DE; padding: 8px 16px; color: #656D76; margin: 12px 0; }
-  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
-  th { background: #F6F8FA; font-weight: 600; padding: 8px 12px; border: 1px solid #D0D7DE; }
-  td { padding: 8px 12px; border: 1px solid #D0D7DE; }
-  img { max-width: 100%; }
-  a { color: #0969DA; }
-`;
-
-let _browser = null;
-async function getBrowser() {
-  if (_browser && _browser.isConnected()) return _browser;
-  _browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-  return _browser;
+function buildCss({ padding, bg }) {
+  return `
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 14px; color: #1F2937; line-height: 1.6;
+      padding: ${padding}px; margin: 0;
+      max-width: 800px; background: ${bg};
+    }
+    h1 { font-size: 28px; color: #111; margin-top: 24px; margin-bottom: 12px; }
+    h2 { font-size: 22px; color: #222; margin-top: 20px; margin-bottom: 10px; }
+    pre { background: #F6F8FA; border: 1px solid #D0D7DE; border-radius: 6px; padding: 16px; overflow-x: auto; font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+    code { font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 13px; }
+    blockquote { border-left: 4px solid #D0D7DE; padding: 8px 16px; color: #656D76; margin: 12px 0; border-radius: 0 4px 4px 0; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; border-radius: 6px; overflow: hidden; }
+    th { background: #F6F8FA; font-weight: 600; padding: 8px 12px; border: 1px solid #D0D7DE; }
+    td { padding: 8px 12px; border: 1px solid #D0D7DE; }
+    tr:nth-child(even) td { background: #F8FAFC; }
+    img { max-width: 100%; }
+    a { color: #0969DA; }
+    .watermark { position: fixed; bottom: 20px; right: 20px; font-size: 12px; color: rgba(0,0,0,.15); pointer-events: none; z-index: 999; }
+  `;
 }
 
 program
@@ -43,6 +46,10 @@ program.command('convert')
   .requiredOption('-i, --input <file>', 'Input Markdown file')
   .requiredOption('-o, --output <file>', 'Output image file (.png or .jpg)')
   .option('-w, --width <px>', 'Image width in pixels', '800')
+  .option('--scale <n>', 'Device scale factor for high DPI (retina)', '1')
+  .option('--padding <px>', 'Page padding in pixels', '48')
+  .option('--bg <color>', 'Background color (CSS value)', '#ffffff')
+  .option('--watermark <text>', 'Watermark text in bottom-right corner')
   .action(async (opts) => {
     const input = path.resolve(opts.input);
     const output = path.resolve(opts.output);
@@ -54,20 +61,37 @@ program.command('convert')
 
     const md = fs.readFileSync(input, 'utf-8');
     const bodyHtml = renderMarkdown(md);
-    const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${pageCss}</style></head><body>${bodyHtml}</body></html>`;
+    const watermarkHtml = opts.watermark
+      ? `<div class="watermark">${opts.watermark.replace(/</g, '&lt;')}</div>`
+      : '';
+    const css = buildCss({ padding: parseInt(opts.padding), bg: opts.bg });
+    const fullHtml = buildHtmlPage({
+      body: bodyHtml + watermarkHtml,
+      css,
+      title: 'Markdown to Image',
+    });
 
     try {
-      const browser = await getBrowser();
-      const page = await browser.newPage();
-      await page.setViewport({ width: parseInt(opts.width), height: 100 });
-      await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
+      const scale = parseInt(opts.scale) || 1;
+      const width = parseInt(opts.width);
+      await withPage(async (page) => {
+        await page.setViewport({
+          width: width * scale,
+          height: 100,
+          deviceScaleFactor: scale,
+        });
+        await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
 
-      const bodyHeight = await page.evaluate(() => document.body.scrollHeight);
-      await page.setViewport({ width: parseInt(opts.width), height: Math.ceil(bodyHeight) + 50 });
+        const bodyHeight = await page.evaluate(() => document.body.scrollHeight);
+        await page.setViewport({
+          width: width * scale,
+          height: Math.ceil(bodyHeight) + 50,
+          deviceScaleFactor: scale,
+        });
 
-      const format = ext === '.png' ? 'png' : 'jpeg';
-      await page.screenshot({ path: output, fullPage: true, type: format, omitBackground: false });
-      await page.close();
+        const format = ext === '.png' ? 'png' : 'jpeg';
+        await page.screenshot({ path: output, fullPage: true, type: format, omitBackground: false });
+      });
       console.log(`Done: ${output}`);
     } catch (e) {
       console.error('Error:', e.message);

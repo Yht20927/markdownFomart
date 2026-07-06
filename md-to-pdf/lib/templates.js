@@ -3,11 +3,16 @@ const path = require('path');
 
 const templatesPath = path.join(__dirname, '..', 'templates.json');
 
+// F-2: Module-level cache — load templates once, reuse across calls
+let _cache = null;
+
 function loadTemplates() {
+  if (_cache) return _cache;
   if (!fs.existsSync(templatesPath)) {
     throw new Error(`templates.json not found at ${templatesPath}`);
   }
-  return JSON.parse(fs.readFileSync(templatesPath, 'utf-8'));
+  _cache = JSON.parse(fs.readFileSync(templatesPath, 'utf-8'));
+  return _cache;
 }
 
 function listTemplates() {
@@ -16,7 +21,8 @@ function listTemplates() {
   const unique = [];
 
   for (const t of templates) {
-    const baseId = t.id.replace(/-(compact|relaxed)$/, '');
+    // F-3: Also strip -standard suffix, not just -compact/-relaxed
+    const baseId = t.id.replace(/-(compact|relaxed|standard)$/, '');
     if (!baseIds.has(baseId)) {
       baseIds.add(baseId);
       unique.push({

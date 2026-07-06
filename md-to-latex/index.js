@@ -13,6 +13,21 @@ function escapeLatex(str) {
     .replace(/\^/g, '\\textasciicircum{}');
 }
 
+// P0-15: Apply escapeLatex to heading/link/list text to prevent LaTeX compilation errors
+function escapeLatexText(str) {
+  // Only escape if not already escaped (check for leading backslash before special chars)
+  return str
+    .replace(/(?<!\\)&/g, '\\&')
+    .replace(/(?<!\\)%/g, '\\%')
+    .replace(/(?<!\\)\$/g, '\\$')
+    .replace(/(?<!\\)#/g, '\\#')
+    .replace(/(?<!\\)_{1}(?!\{)/g, '\\_')
+    .replace(/(?<!\\)\{/g, '\\{')
+    .replace(/(?<!\\)\}/g, '\\}')
+    .replace(/(?<!\\)~/g, '\\textasciitilde{}')
+    .replace(/(?<!\\)\^/g, '\\textasciicircum{}');
+}
+
 // Escape LaTeX special chars, but protect against double-escaping math $...$
 function latexEscapeCell(str) {
   return str
@@ -20,6 +35,13 @@ function latexEscapeCell(str) {
     .replace(/\\`/g, '`')
     .replace(/\\\*/g, '*')
     .replace(/\|/g, '\\textbar{}')
+    // P0-16: Add missing LaTeX special chars for table cells
+    .replace(/&/g, '\\&')
+    .replace(/%/g, '\\%')
+    .replace(/\$/g, '\\$')
+    .replace(/#/g, '\\#')
+    .replace(/\{/g, '\\{')
+    .replace(/\}/g, '\\}')
     .replace(/_/g, '\\_')
     .replace(/\^/g, '\\textasciicircum{}')
     .replace(/~/g, '\\textasciitilde{}')
@@ -107,19 +129,21 @@ function mdToLatex(md) {
   });
 
   // 3. Protect footnote definitions [^label]: from link/image regex
-  const footnotes = [];
+  // P0-17: Track label→content mapping for proper \footnote{content} substitution
+  const footnoteMap = new Map(); // label → content
   result = result.replace(/^\[\^(.+?)\]:\s*(.*)$/gm, (_m, label, content) => {
-    footnotes.push({ label, content });
-    return `<<FN_${footnotes.length - 1}>>`;
+    footnoteMap.set(label, content);
+    return `<<FNDEF_${label}>>`;
   });
 
   // 4. Headers (fix: \chapter → \section for article class)
-  result = result.replace(/^######\s+(.+)$/gm, '\\subparagraph{$1}');
-  result = result.replace(/^#####\s+(.+)$/gm, '\\paragraph{$1}');
-  result = result.replace(/^####\s+(.+)$/gm, '\\subsubsection{$1}');
-  result = result.replace(/^###\s+(.+)$/gm, '\\subsection{$1}');
-  result = result.replace(/^##\s+(.+)$/gm, '\\section{$1}');
-  result = result.replace(/^#\s+(.+)$/gm, '\\section{$1}');  // was \chapter
+  // P0-15: Escape LaTeX special chars in heading text
+  result = result.replace(/^######\s+(.+)$/gm, (_m, title) => '\\subparagraph{' + escapeLatexText(title) + '}');
+  result = result.replace(/^#####\s+(.+)$/gm, (_m, title) => '\\paragraph{' + escapeLatexText(title) + '}');
+  result = result.replace(/^####\s+(.+)$/gm, (_m, title) => '\\subsubsection{' + escapeLatexText(title) + '}');
+  result = result.replace(/^###\s+(.+)$/gm, (_m, title) => '\\subsection{' + escapeLatexText(title) + '}');
+  result = result.replace(/^##\s+(.+)$/gm, (_m, title) => '\\section{' + escapeLatexText(title) + '}');
+  result = result.replace(/^#\s+(.+)$/gm, (_m, title) => '\\section{' + escapeLatexText(title) + '}');  // was \chapter
 
   // 5. Strikethrough (add ulem package in preamble)
   result = result.replace(/~~(.+?)~~/g, '\\sout{$1}');
@@ -135,11 +159,23 @@ function mdToLatex(md) {
   // 8. Images — MUST be before links (![ has [ inside)
   result = result.replace(/!\[(.+?)\]\((.+?)\)/g, '\\includegraphics[width=\\linewidth]{$2}');
 
-  // 10. Links
-  result = result.replace(/\[(.+?)\]\((.+?)\)/g, '\\href{$2}{$1}');
+  // 10. Links — escape special chars in link text
+  result = result.replace(/\[(.+?)\]\((.+?)\)/g, (_m, text, url) => '\\href{' + url + '}{' + escapeLatexText(text) + '}');
 
   // 11. Footnote references [^label] — after links to avoid double-matching
-  result = result.replace(/\[\^(.+?)\]/g, '\\footnote{$1}');
+  // P0-17: Replace with \footnote{actual content} using the label→content map
+  result = result.replace(/\[\^(.+?)\]/g, (_m, label) => {
+    const content = footnoteMap.get(label);
+    if (content) {
+      // Process inline markdown in footnote content
+      let processed = content
+        .replace(/\*\*(.+?)\*\*/g, '\\textbf{$1}')
+        .replace(/`(.+?)`/g, '\\texttt{$1}')
+        .replace(/\[(.+?)\]\((.+?)\)/g, '\\href{$2}{$1}');
+      return '\\footnote{' + processed + '}';
+    }
+    return '\\footnote{' + escapeLatexText(label) + '}';
+  });
 
   // 12. Blockquotes — handle multi-line (consecutive > lines)
   result = result.replace(/((?:^>[^\n]*\n?)+)/gm, (match) => {
@@ -151,14 +187,14 @@ function mdToLatex(md) {
   });
 
   // 13. Task list items — BEFORE regular unordered lists to avoid conflict
-  result = result.replace(/^(\s*)[-*+]\s+\[x\]\s+(.+)$/gim, '$1\\uitem $2 $\\checkmark$');
-  result = result.replace(/^(\s*)[-*+]\s+\[ \]\s+(.+)$/gim, '$1\\uitem $2 $\\square$');
+  result = result.replace(/^(\s*)[-*+]\s+\[x\]\s+(.+)$/gim, (_m, indent, text) => indent + '\\uitem ' + escapeLatexText(text) + ' $\\checkmark$');
+  result = result.replace(/^(\s*)[-*+]\s+\[ \]\s+(.+)$/gim, (_m, indent, text) => indent + '\\uitem ' + escapeLatexText(text) + ' $\\square$');
 
   // 14. Ordered lists — match indented items too
-  result = result.replace(/^(\s*)\d+\.\s+(.+)$/gm, '$1\\oitem $2');
+  result = result.replace(/^(\s*)\d+\.\s+(.+)$/gm, (_m, indent, text) => indent + '\\oitem ' + escapeLatexText(text));
 
   // 15. Unordered lists — match indented items too
-  result = result.replace(/^(\s*)[-*+]\s+(.+)$/gm, '$1\\uitem $2');
+  result = result.replace(/^(\s*)[-*+]\s+(.+)$/gm, (_m, indent, text) => indent + '\\uitem ' + escapeLatexText(text));
 
   // 16. Nest lists via state machine (tracks indent depth for proper environment nesting)
   //     Replaces flat regex grouping with hierarchical nesting
@@ -222,26 +258,27 @@ function mdToLatex(md) {
     result = result.replace(`<<CODEBLOCK_${i}>>`, restored);
   }
 
-  // 21. Restore footnotes (with basic markdown→latex conversion of content)
-  for (let i = 0; i < footnotes.length; i++) {
-    const fn = footnotes[i];
-    let content = fn.content;
-    // Process inline markdown in footnote content
-    content = content.replace(/\*\*(.+?)\*\*/g, '\\textbf{$1}');
-    content = content.replace(/`(.+?)`/g, '\\texttt{$1}');
-    content = content.replace(/\[(.+?)\]\((.+?)\)/g, '\\href{$2}{$1}');
-    result = result.replace(`<<FN_${i}>>`, `\\footnotetext{${content}}`);
+  // 21. Remove footnote definition placeholders (P0-17: content already inlined via \footnote{})
+  for (const [label] of footnoteMap) {
+    result = result.replace(`<<FNDEF_${label}>>`, '');
   }
 
   result = result.replace(/\n{3,}/g, '\n\n').trim();
 
-  return `\\documentclass{article}
+  // F-11: Detect CJK characters and use ctexart for proper Chinese/Japanese/Korean support
+  const hasCJK = /[一-鿿㐀-䶿豈-﫿぀-ゟ゠-ヿ가-힯]/.test(result);
+  const docClass = hasCJK ? 'ctexart' : 'article';
+  const cjkPackages = hasCJK ? `
+\\usepackage{geometry}
+\\geometry{a4paper, margin=2.5cm}` : '';
+
+  return `\\documentclass{${docClass}}
 \\usepackage{hyperref}
 \\usepackage{graphicx}
 \\usepackage{listings}
 \\usepackage{xcolor}
 \\usepackage[normalem]{ulem}
-\\usepackage{amssymb}
+\\usepackage{amssymb}${cjkPackages}
 
 \\begin{document}
 

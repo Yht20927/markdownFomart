@@ -1,0 +1,41 @@
+{
+  "name": "markdown-converter-suite",
+  "version": "2.0.0",
+  "private": true,
+  "description": "16-tool Markdown conversion suite with shared pipeline and unified CLI",
+  "workspaces": [
+    "shared",
+    "csv-to-md",
+    "html-to-md",
+    "json-to-md",
+    "md-table-to-csv",
+    "md-table-to-image",
+    "md-table-to-pdf",
+    "md-to-confluence",
+    "md-to-html",
+    "md-to-image",
+    "md-to-latex",
+    "md-to-pdf",
+    "md-to-rst",
+    "md-to-text",
+    "md-to-word",
+    "pdf-to-md",
+    "word-to-md"
+  ],
+  "scripts": {
+    "test": "node --test shared/__tests__/*.test.js */__tests__/*.test.js",
+    "test:shared": "node --test shared/__tests__/*.test.js",
+    "test:tools": "node --test */__tests__/*.test.js",
+    "lint": "for f in shared/*.js */*.js; do node -c \"$f\" || exit 1; done && echo 'All files pass syntax check'"
+  },
+  "devDependencies": {
+    "marked": "^15.0.0",
+    "katex": "^0.16.0",
+    "highlight.js": "^11.9.0",
+    "commander": "^13.0.0",
+    "turndown": "^7.2.0",
+    "mammoth": "^1.8.0",
+    "pdf-parse": "^1.1.1",
+    "puppeteer": "^24.0.0"
+  }
+}

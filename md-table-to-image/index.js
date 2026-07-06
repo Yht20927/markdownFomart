@@ -1,11 +1,18 @@
 #!/usr/bin/env node
 const { program } = require('commander');
 const { Marked } = require('marked');
-const puppeteer = require('puppeteer');
+const katex = require('katex');
+const hljs = require('highlight.js');
+const { createRenderer } = require('../shared/html-renderer');
+const { withPage } = require('../shared/browser-pool');
+const { buildHtmlPage } = require('../shared/html-page');
 const fs = require('fs');
 const path = require('path');
 
 const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8'));
+
+// Use createRenderer for katex/hljs support
+const { renderMarkdown } = createRenderer({ Marked, katex, hljs });
 
 const pageCss = `
   body { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; color: #1F2937; line-height: 1.6; padding: 40px; margin: 0; background: #fff; }
@@ -16,14 +23,9 @@ const pageCss = `
   pre { background: #F6F8FA; border: 1px solid #D0D7DE; border-radius: 6px; padding: 16px; }
   code { font-family: Consolas, monospace; font-size: 13px; }
   a { color: #0969DA; }
+  .katex-display { margin: 12px 0; }
+  .katex { font-size: 1.1em; }
 `;
-
-let _browser = null;
-async function getBrowser() {
-  if (_browser && _browser.isConnected()) return _browser;
-  _browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-  return _browser;
-}
 
 program
   .name('md-table-to-image')
@@ -44,21 +46,18 @@ program.command('convert')
     }
 
     const md = fs.readFileSync(input, 'utf-8');
-    const marked = new Marked();
-    marked.setOptions({ breaks: true, gfm: true });
-    const bodyHtml = marked.parse(md);
-    const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${pageCss}</style></head><body>${bodyHtml}</body></html>`;
+    const bodyHtml = renderMarkdown(md);
+    const fullHtml = buildHtmlPage({ body: bodyHtml, css: pageCss, title: 'Markdown Table to Image' });
 
     try {
-      const browser = await getBrowser();
-      const page = await browser.newPage();
-      await page.setViewport({ width: 900, height: 100 });
-      await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
-      const bodyHeight = await page.evaluate(() => document.body.scrollHeight);
-      await page.setViewport({ width: 900, height: Math.ceil(bodyHeight) + 40 });
-      const format = ext === '.png' ? 'png' : 'jpeg';
-      await page.screenshot({ path: output, fullPage: true, type: format, omitBackground: false });
-      await page.close();
+      await withPage(async (page) => {
+        await page.setViewport({ width: 900, height: 100 });
+        await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
+        const bodyHeight = await page.evaluate(() => document.body.scrollHeight);
+        await page.setViewport({ width: 900, height: Math.ceil(bodyHeight) + 40 });
+        const format = ext === '.png' ? 'png' : 'jpeg';
+        await page.screenshot({ path: output, fullPage: true, type: format, omitBackground: false });
+      });
       console.log(`Done: ${output}`);
     } catch (e) {
       console.error('Error:', e.message);

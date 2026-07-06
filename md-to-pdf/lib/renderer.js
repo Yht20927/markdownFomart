@@ -4,7 +4,7 @@ const hljs = require('highlight.js');
 const { createRenderer } = require('../../shared/html-renderer');
 const { getTemplate } = require('./templates');
 
-const { escapeHtml, processMath, restorePlaceholders } = createRenderer({ Marked, katex, hljs });
+const { escapeHtml, renderMarkdown } = createRenderer({ Marked, katex, hljs });
 
 function buildCss(template) {
   const { colors, fonts, fontSizes, spacing } = template;
@@ -142,45 +142,130 @@ function buildCss(template) {
     .katex-display { margin: 12px 0; page-break-inside: avoid; }
     .katex { font-size: 1.1em; }
 
+    /* === M4 Beautification === */
+
+    /* Code blocks: rounded corners, shadow, language tag */
+    pre {
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+      position: relative;
+    }
+    pre[data-lang]::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: .75em;
+      color: var(--t-muted, #888);
+      padding: 2px 8px;
+      background: var(--t-code-bg);
+      border-radius: 0 6px 0 4px;
+      font-family: var(--t-font-code);
+    }
+
+    /* Table: rounded corners, sticky header */
+    table {
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    thead {
+      display: table-header-group;
+    }
+    tr { page-break-inside: avoid; }
+
+    /* Blockquote: colored left border, light bg */
+    blockquote {
+      border-left: 4px solid var(--t-accent, var(--t-quote-border));
+      background: var(--t-quote-bg);
+      padding: .5em 1em;
+      font-style: italic;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* Admonition blocks */
+    .admonition {
+      border-left: 4px solid;
+      padding: .8em 1em;
+      border-radius: 4px;
+      margin: 1em 0;
+    }
+    .admonition.warn { border-color: #d97706; background: #fef3c7; }
+    .admonition.info { border-color: #2563eb; background: #dbeafe; }
+    .admonition.tip { border-color: #16a34a; background: #dcfce7; }
+    .admonition.danger { border-color: #dc2626; background: #fee2e2; }
+
+    /* Cover page */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      page-break-after: always;
+    }
+    .cover h1 { font-size: 2.4em; margin-bottom: .2em; }
+    .cover .meta { color: var(--t-muted, #888); font-size: .9em; }
+
+    /* TOC */
+    .toc { page-break-after: always; }
+    .toc h2 { font-size: 1.6em; }
+    .toc ul { list-style: none; padding-left: 0; }
+    .toc li { margin-bottom: 4pt; }
+    .toc a { color: var(--t-link); text-decoration: none; }
+
+    /* Page numbers via @page */
+    @page {
+      @bottom-right {
+        content: counter(page);
+        font-size: 9pt;
+        color: var(--t-muted, #888);
+      }
+    }
+
     @media print {
       body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
   `;
 }
 
+// F-1: Inject KaTeX CSS and hljs theme CSS for math/code rendering
+// Inline CSS for Puppeteer compatibility (file:// links don't always work)
+function buildHeadExtras(template) {
+  const fs = require('fs');
+  let katexCss = '';
+  let hljsCss = '';
+  try {
+    katexCss = fs.readFileSync(require.resolve('katex/dist/katex.min.css'), 'utf-8');
+  } catch { /* KaTeX not available */ }
+  try {
+    const isDark = template.id.includes('dark');
+    const hljsTheme = isDark ? 'atom-one-dark' : 'atom-one-light';
+    hljsCss = fs.readFileSync(require.resolve('highlight.js/styles/' + hljsTheme + '.css'), 'utf-8');
+  } catch { /* hljs theme not available */ }
+  return `<style>${katexCss}</style>\n  <style>${hljsCss}</style>`;
+}
+
 function renderHtml(md, templateId) {
   const template = getTemplate(templateId);
-  const { text, codeBlocks, inlineMath, blockMath } = processMath(md);
 
-  const marked = new Marked();
-  marked.setOptions({
-    highlight: (code, lang) => {
-      if (lang && hljs.getLanguage(lang)) {
-        try {
-          return hljs.highlight(code, { language: lang }).value;
-        } catch {}
-      }
-      return escapeHtml(code);
-    },
-    breaks: true,
-    gfm: true,
-  });
-
-  let html = marked.parse(text);
-  html = restorePlaceholders(html, codeBlocks, inlineMath, blockMath);
+  // A7: Use shared renderMarkdown instead of duplicating marked/math/code logic
+  const bodyHtml = renderMarkdown(md);
 
   const css = buildCss(template);
+  const headExtras = buildHeadExtras(template);
+
   const fullPage = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Markdown to PDF</title>
+  ${headExtras}
   <style>${css}</style>
 </head>
 <body>
   <div class="content">
-    ${html}
+    ${bodyHtml}
   </div>
 </body>
 </html>`;

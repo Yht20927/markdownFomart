@@ -1,45 +1,22 @@
-const puppeteer = require('puppeteer');
+const { withPage } = require('../../shared/browser-pool');
 const path = require('path');
 
-let _browser = null;
-
-async function getBrowser() {
-  if (_browser && _browser.isConnected()) return _browser;
-  _browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-  });
-  return _browser;
-}
-
-async function closeBrowser() {
-  if (_browser) {
-    await _browser.close();
-    _browser = null;
-  }
-}
-
-async function htmlToPdf(html, outputPath) {
-  const browser = await getBrowser();
-  const page = await browser.newPage();
-
-  try {
+async function htmlToPdf(html, outputPath, margin = { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' }) {
+  await withPage(async (page) => {
     await page.setContent(html, {
-      waitUntil: 'networkidle0',
+      waitUntil: 'domcontentloaded',
       timeout: 30000,
     });
 
     await page.pdf({
       path: outputPath,
       format: 'A4',
-      margin: { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' },
+      margin,
       printBackground: true,
       displayHeaderFooter: false,
       preferCSSPageSize: false,
     });
-  } finally {
-    await page.close();
-  }
+  });
 }
 
 async function htmlToPreview(html, outputPath) {
@@ -62,10 +39,12 @@ async function convertFile(inputPath, outputPath, templateId) {
   if (ext === '.html') {
     await htmlToPreview(html, outputPath);
   } else {
-    await htmlToPdf(html, outputPath);
+    // F-5: Use pageMargin from theme if available, otherwise default
+    const margin = template.pageMargin || { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' };
+    await htmlToPdf(html, outputPath, margin);
   }
 
   return { template };
 }
 
-module.exports = { convertFile, htmlToPdf, htmlToPreview, closeBrowser };
+module.exports = { convertFile, htmlToPdf, htmlToPreview };

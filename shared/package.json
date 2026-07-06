@@ -1,0 +1,14 @@
+{
+  "name": "shared",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Shared modules for the Markdown conversion suite",
+  "main": "index.js",
+  "dependencies": {
+    "marked": "^15.0.0",
+    "katex": "^0.16.0",
+    "highlight.js": "^11.9.0",
+    "puppeteer": "^24.0.0",
+    "turndown": "^7.2.0"
+  }
+}

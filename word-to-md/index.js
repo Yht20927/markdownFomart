@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 const { program } = require('commander');
 const mammoth = require('mammoth');
-const TurndownService = require('turndown');
+const { createTurndown } = require('../shared/turndown-factory');
 const fs = require('fs');
 const path = require('path');
 
 const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8'));
 
-// Same pipeline as md-to.com: mammoth → HTML → turndown → Markdown
-const turndown = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
+// Use shared turndown factory with GFM table support
+const turndown = createTurndown();
 
 program
   .name('word-to-md')

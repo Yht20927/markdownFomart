@@ -2,6 +2,7 @@
 const { program } = require('commander');
 const fs = require('fs');
 const path = require('path');
+const { resolveInOut, readInput, writeOutput, handleError } = require('../shared/cli');
 
 const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8'));
 
@@ -22,56 +23,35 @@ function mdToRst(md) {
     return `> <<CODEBLOCK_${codeBlocks.length - 1}>>`;
   });
 
-  // Protect footnote definitions [^label]: from link regex
+  // Protect footnote definitions
   const footnotes = [];
   result = result.replace(/^\[\^(.+?)\]:\s*(.*)$/gm, (_m, label, content) => {
     footnotes.push({ label, content });
     return `<<FN_${footnotes.length - 1}>>`;
   });
 
-  // Headers — RST uses underline adornments
-  // Use underline-only (simpler, more compatible)
-  result = result.replace(/^######\s+(.+)$/gm, '$1\n""""\n');
-  result = result.replace(/^#####\s+(.+)$/gm, '$1\n^^^^^\n');
-  result = result.replace(/^####\s+(.+)$/gm, '$1\n~~~~~\n');
-  result = result.replace(/^###\s+(.+)$/gm, '$1\n-----\n');
-  result = result.replace(/^##\s+(.+)$/gm, '$1\n=====\n');
-  result = result.replace(/^#\s+(.+)$/gm, '$1\n=====\n');
+  // P0-13: Match underline length to heading text length
+  result = result.replace(/^######\s+(.+)$/gm, (_m, title) => title + '\n' + '"'.repeat(title.trim().length) + '\n');
+  result = result.replace(/^#####\s+(.+)$/gm, (_m, title) => title + '\n' + '^'.repeat(title.trim().length) + '\n');
+  result = result.replace(/^####\s+(.+)$/gm, (_m, title) => title + '\n' + '~'.repeat(title.trim().length) + '\n');
+  result = result.replace(/^###\s+(.+)$/gm, (_m, title) => title + '\n' + '-'.repeat(title.trim().length) + '\n');
+  result = result.replace(/^##\s+(.+)$/gm, (_m, title) => title + '\n' + '='.repeat(title.trim().length) + '\n');
+  result = result.replace(/^#\s+(.+)$/gm, (_m, title) => title + '\n' + '='.repeat(title.trim().length) + '\n');
 
-  // Bold: **text** → **text**
-  // Italic: *text* → *text*  (same in RST)
-
-  // Inline code: `code` → ``code``
   result = result.replace(/`([^`]+)`/g, '``$1``');
-
-  // Images: ![alt](url) → .. image:: url\n   :alt: alt  (BEFORE links!)
   result = result.replace(/!\[(.+?)\]\((.+?)\)/g, '.. image:: $2\n   :alt: $1\n');
-
-  // Links: [text](url) → `text <url>`_
   result = result.replace(/\[(.+?)\]\((.+?)\)/g, '`$1 <$2>`_');
-
-  // Footnote references [^label] → RST [#label]_
   result = result.replace(/\[\^(.+?)\]/g, '[#$1]_');
 
-  // Footnote refs [^label] → preserve
-  // (already handled by not matching link pattern since ^ is in brackets)
-
-  // Blockquotes → handle multi-line blocks
   result = result.replace(/((?:^>[^\n]*\n?)+)/gm, (match) => {
     const lines = match.split('\n').map(l => l.replace(/^>\s?/, ''));
     return lines.map(l => '    ' + l).join('\n') + '\n';
   });
 
-  // Unordered lists: preserve indentation for nested lists
   result = result.replace(/^(\s*)[-*+]\s+/gm, '$1* ');
-
-  // Ordered lists: use #. for auto-numbering, preserve indentation
   result = result.replace(/^(\s*)\d+\.\s+/gm, '$1#. ');
-
-  // Horizontal rule: --- → ----
   result = result.replace(/^[-*]{3,}$/gm, '----');
 
-  // Restore code blocks (RST uses :: then indented block)
   for (let i = 0; i < codeBlocks.length; i++) {
     const cb = codeBlocks[i];
     const langOpt = cb.lang ? `\n   :language: ${cb.lang}` : '';
@@ -81,18 +61,16 @@ function mdToRst(md) {
     result = result.replace(`<<CODEBLOCK_${i}>>`, restored);
   }
 
-  // Restore footnotes
   for (let i = 0; i < footnotes.length; i++) {
     const fn = footnotes[i];
-    // Process markdown in footnote content
     let content = fn.content
       .replace(/\*\*(.+?)\*\*/g, '**$1**')
       .replace(/\[(.+?)\]\((.+?)\)/g, '`$1 <$2>`_');
-    result = result.replace(`<<FN_${i}>>`, `.. [${fn.label}] ${content}`);
+    // P0-14: Add # prefix to match [#label]_ reference format
+    result = result.replace(`<<FN_${i}>>`, `.. [#${fn.label}] ${content}`);
   }
 
-  result = result.replace(/\n{3,}/g, '\n\n').trim();
-  return result;
+  return result.replace(/\n{3,}/g, '\n\n').trim();
 }
 
 program
@@ -105,13 +83,12 @@ program.command('convert')
   .requiredOption('-i, --input <file>', 'Input Markdown file')
   .requiredOption('-o, --output <file>', 'Output .rst file')
   .action(async (opts) => {
-    const input = path.resolve(opts.input);
-    const output = path.resolve(opts.output);
-    if (!fs.existsSync(input)) { console.error('Input file not found'); process.exit(1); }
-    const md = fs.readFileSync(input, 'utf-8');
-    const result = mdToRst(md);
-    fs.writeFileSync(output, result, 'utf-8');
-    console.log(`Done: ${output} (${result.length} chars)`);
+    try {
+      const { input, output } = resolveInOut(opts);
+      const md = readInput(input);
+      const result = mdToRst(md);
+      writeOutput(output, result);
+    } catch (e) { handleError(e); }
   });
 
 program.parse();
